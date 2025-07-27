@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Grocery Store Management{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="logo">Grocery Store</a>
+        <ul>
+            {% if session.user_id %}
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                {% if session.role == 'admin' %}
+                    <li><a href="{{ url_for('add_new_product') }}">Add Product</a></li>
+                    <li><a href="{{ url_for('reports') }}">Reports</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">Logout ({{ session.username }})</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>&copy; {{ current_year }} Grocery Store Management</p>
+    </footer>
+</body>
+</html>
