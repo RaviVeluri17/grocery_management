@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from werkzeug.security import generate_password_hash, check_password_hash
 import functools
 import datetime
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from config import SECRET_KEY, ADMIN_SECRET_KEY
 
 # Import all necessary database functions
@@ -18,7 +18,7 @@ from database import (
     update_product_details
 )
 
-load_dotenv() # Load environment variables from a .env file
+# load_dotenv() # Load environment variables from a .env file
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
